@@ -36,14 +36,15 @@ module.exports = {
       { test: /\.tsx?$/i, use: 'ts' },
       { test: /\.jsx?$/i, use: 'babel' },
       { test: /\.css$/i, use: [...styleLoaders] },
-      { test: /\.s[ac]ss$/i, use: [...styleLoaders, { loader: 'sass', options: { sourceMap: true } }] },
-      { test: /\.less$/i, use: [...styleLoaders, { loader: 'less', options: { sourceMap: true } }] },
+      { test: /\.s[ac]ss$/i, use: [...styleLoaders, { loader: 'sass', options: { sourceMap: isDev } }] },
+      { test: /\.less$/i, use: [...styleLoaders, { loader: 'less', options: { sourceMap: isDev } }] },
       {
         test: /\.jpe?g|png|bmp|gif$/i,
         use: [{
           loader: 'url',
           options: {
-            limit: 8192
+            limit: 8192,
+            fallback: 'file-loader?outputPath=static/img'
           }
         }]
       }
