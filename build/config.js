@@ -1,5 +1,3 @@
-const Path = require('path')
+const path = require('path')
 
-exports.path = (path)=>{
-  return Path.resolve(__dirname,'../',path)
-}
+module.exports.root = (pathname = '') => path.resolve(__dirname, '../', pathname)
