@@ -3,10 +3,12 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const CopyPlugin = require('copy-webpack-plugin')
 const { root } = require('./config')
 
+const isDev = process.env.NODE_ENV === 'development'
+
 const styleLoaders = [
   { loader: MiniCssExtractPlugin.loader },
-  { loader: 'css', options: { sourceMap: true } },
-  { loader: 'postcss', options: { sourceMap: true } }
+  { loader: 'css', options: { sourceMap: isDev } },
+  { loader: 'postcss', options: { sourceMap: isDev } }
 ]
 
 module.exports = {
@@ -31,11 +33,20 @@ module.exports = {
   },
   module: {
     rules: [
-      { test: /\.ts[x]?$/i, use: 'ts' },
-      { test: /\.js[x]?$/i, use: 'babel' },
+      { test: /\.tsx?$/i, use: 'ts' },
+      { test: /\.jsx?$/i, use: 'babel' },
       { test: /\.css$/i, use: [...styleLoaders] },
       { test: /\.s[ac]ss$/i, use: [...styleLoaders, { loader: 'sass', options: { sourceMap: true } }] },
-      { test: /\.less$/i, use: [...styleLoaders, { loader: 'less', options: { sourceMap: true } }] }
+      { test: /\.less$/i, use: [...styleLoaders, { loader: 'less', options: { sourceMap: true } }] },
+      {
+        test: /\.jpe?g|png|bmp|gif$/i,
+        use: [{
+          loader: 'url',
+          options: {
+            limit: 8192
+          }
+        }]
+      }
     ]
   },
   plugins: [
